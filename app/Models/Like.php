@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
+	use HasFactory;
 
 	protected $table = "likes";
 	public $timestamps = false;
@@ -19,14 +21,10 @@ class Like extends Model
 		return $this->belongsTo(User::class);
 	}
 
-	public function comment() 
+	public function liked() 
 	{
-		return $this->belongsTo(Comment::class);
+		$post = $this->morphTo(Post::class, "likeable"); 
+		$comment = $this->morphTo(Comment::class, "likeable"); 
+		return $post ?? $comment;
 	}
-
-	public function post() 
-	{
-		return $this->belongsTo(Post::class);
-	}
-
 }

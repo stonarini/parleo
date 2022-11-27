@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+	use HasFactory;
 
 	protected $table = "comments";
 	public $timestamps = false;
@@ -20,14 +22,16 @@ class Comment extends Model
 		return $this->belongsTo(User::class);
 	}
 
-	public function post()
+	public function parent()
 	{
-		return $this->belongsTo(Post::class);
+		$post = $this->morphTo(Post::class, "commentable");
+		$comment = $this->morphTo(Comment::class, "commentable");
+		return $post ?? $comment;
 	}
 
 	public function comments()
 	{
-		return $this->hasMany(Comment::class);
+		return $this->morphToMany(Comment::class, "commentable");
 	}
 
 	public function likes()

@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Likeable extends Model
 {
 	use HasFactory;
 
-	protected $table = "roles";
+	protected $table = "likeable";
 	public $timestamps = false;
 
-    protected $fillable = [
-        'name',
-    ];
+	public function like()
+	{
+		return $this->belongsTo(Like::class);
+	}
+	
 }
