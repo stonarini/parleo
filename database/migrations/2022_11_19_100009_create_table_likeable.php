@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\User;
+use App\Models\Like;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,11 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('likeable', function (Blueprint $table) {
             $table->id();
-			$table->string('content');
-			$table->string('image');
-			$table->foreignIdFor(User::class)->constrained();
+			$table->foreignIdFor(Like::class)->constrained();
+			$table->bigInteger("likeable_id");
+			$table->string("likeable_type");
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('likeable');
     }
 };

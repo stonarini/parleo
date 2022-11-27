@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->string('name');
 			$table->foreignIdFor(User::class)->constrained();
 			$table->foreignIdFor(Community::class)->constrained();
+			$table->unique(["user_id", "community_id"]);
         });
     }
 
