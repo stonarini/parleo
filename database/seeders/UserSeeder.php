@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
 				});
 
 			// Generate likes for posts (min: 0, max: 10)
-			// The posts do not include the ones of the users (see line 39)
+			// The posts do not include the ones of the users (see line 40)
 			Like::factory(rand(0, $ps > 0 ? $ps < 10 ? $ps : 10 : 0))
 				->state(fn () => ["user_id" => $user->id])
 				->create()->each(function ($l) use ($posts, $user) {
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
 
 			// Generate comments for posts 
 			// The max number will be one comment for each post of the site
-			// The posts do not include the ones of the users (see line 39)
+			// The posts do not include the ones of the users (see line 40)
 			Comment::factory(rand(0, sizeof($posts)))
 				->state(fn () => ["user_id" => $user->id])
 				->create()->each(function ($c) use ($posts, $user) {
@@ -92,7 +92,7 @@ class UserSeeder extends Seeder
 			fake()->unique(reset: true)->randomElement();
 
 			// Generate comments for comments (min: 0, max: 10)
-			// The comments do not include the ones of the users (see line 75)
+			// The comments do not include the ones of the users (see line 76)
 			Comment::factory(rand(0, $cs > 0 ? $cs < 10 ? $cs : 10 : 0))
 				->state(fn () => ["user_id" => $user->id])
 				->create()->each(function ($c) use ($comments, $user) {
@@ -105,7 +105,7 @@ class UserSeeder extends Seeder
 			fake()->unique(reset: true)->randomElement();
 
 			// Generate likes for comments
-			// The comments do not include the ones of the users (see line 75)
+			// The comments do not include the ones of the users (see line 76)
 			Like::factory(rand(0, $cs > 0 ? $cs < 10 ? $cs : 10 : 0))
 				->state(fn () => ["user_id" => $user->id])
 				->create()->each(function ($l) use ($comments, $user) {
