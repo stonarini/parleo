@@ -73,7 +73,7 @@ class UserSeeder extends Seeder
 				});
 			fake()->unique(reset: true)->randomElement();
 
-			// Same as we did for the post (line 39)
+			// Same as we did for the post (line 40)
 			$comments = Comment::all();
 			$cs = sizeof($comments);
 
