@@ -18,9 +18,10 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-			$table->string('content');
-			$table->string('image');
-			$table->foreignIdFor(User::class)->constrained();
+            $table->string('content');
+            $table->string('image');
+            $table->timestamp('date');
+            $table->foreignIdFor(User::class)->constrained();
         });
     }
 

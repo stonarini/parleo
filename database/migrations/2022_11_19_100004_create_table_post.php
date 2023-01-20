@@ -17,11 +17,14 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-			$table->string('title');
-			$table->string('content');
-			$table->string('image');
-			$table->foreignIdFor(User::class)->constrained();
-			$table->foreignIdFor(Community::class)->constrained();
+            $table->string('title');
+            $table->string('content')->nullable();
+            $table->string('image')->nullable();
+            $table->timestamp('date');
+            $table->string('access');
+            $table->boolean('commentable');
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Community::class)->constrained();
         });
     }
 
