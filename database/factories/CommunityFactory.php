@@ -9,9 +9,9 @@ class CommunityFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->catchPhrase(),
+            'name' => str_replace(' ', '-', strtolower(fake()->catchPhrase())),
             'description' => fake()->realTextBetween(160, 200, 2),
-			'banner' => 'img/r/default',
+            'banner' => 'img/r/default',
         ];
     }
 }
