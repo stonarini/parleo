@@ -7,39 +7,42 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
-	protected $table = "posts";
-	public $timestamps = false;
+    protected $table = "posts";
+    public $timestamps = false;
 
     protected $fillable = [
         'title',
         'content',
         'image',
+        'date',
+        'access',
+        'commentable'
     ];
 
-	public function user() 
-	{
-		return $this->belongsTo(User::class);
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-	public function community()
-	{
-		return $this->belongsTo(Community::class);
-	}
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
 
-	public function tags()
-	{
-		return $this->belongsToMany(Tag::class);
-	}
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
-	public function comments() 
-	{
-		return $this->morphToMany(Comment::class, "commentable");
-	}
-	
-	public function likes()
-	{
-		return $this->hasMany(Like::class);
-	}
+    public function comments()
+    {
+        return $this->morphToMany(Comment::class, "commentable");
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
