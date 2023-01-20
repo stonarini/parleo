@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,12 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/img/r/{img}', function () {
-	return;
+Route::get('/img/{_}/{img}', function () {
+    return;
 })->middleware("img");
 
-Route::get('/img/u/{img}', function () {
-	return;
-})->middleware("img");
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::get('/r/{community}/post/new', [PostController::class, 'edit'])->name('post.edit');
+    Route::get('/r/{community}/post/{id}', [PostController::class, 'view'])->name('post.view');
+    Route::post('/r/{community}/post/new', [PostController::class, 'create'])->name('post.create');
+    Route::post('/r/{community}/post/{id}', [PostController::class, 'update'])->name('post.update');
+    Route::put('/r/{community}/post/{id}', [PostController::class, 'edit'])->name('post.edit');
+    Route::delete('/r/{community}/post/{id}', [PostController::class, 'delete'])->name('post.delete');
+});
+
+require __DIR__ . '/auth.php';
