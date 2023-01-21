@@ -34,13 +34,12 @@ Route::get('/img/{_}/{img}', function () {
 })->middleware("img");
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/r/{community}/post/new', [PostController::class, 'edit'])->name('post.edit');
-    Route::get('/r/{community}/post/{id}', [PostController::class, 'view'])->name('post.view');
-    Route::post('/r/{community}/post/new', [PostController::class, 'create'])->name('post.create');
-    Route::post('/r/{community}/post/{id}', [PostController::class, 'update'])->name('post.update');
-    Route::put('/r/{community}/post/{id}', [PostController::class, 'edit'])->name('post.edit');
-    Route::delete('/r/{community}/post/{id}', [PostController::class, 'delete'])->name('post.delete');
+Route::middleware('auth')->prefix('/r/{community:name}/post')->controller(PostController::class)->group(function () {
+    Route::get('/new', 'edit')->name('post.edit');
+    Route::get('/{post}', 'view')->name('post.view');
+    Route::post('/{post?}', 'save')->name('post.save');
+    Route::put('/{post}', 'edit')->name('post.update');
+    Route::delete('/{post}', 'delete')->name('post.delete');
 });
 
 require __DIR__ . '/auth.php';
