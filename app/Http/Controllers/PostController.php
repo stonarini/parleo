@@ -12,49 +12,19 @@ use Illuminate\Support\Facades\Redirect;
 class PostController extends Controller
 {
 
-    public function edit(Request $request, $community, $id = null)
+    public function edit(Request $request, Community $community, Post $post = null)
     {
         return view('post.create', [
             'user' => $request->user(),
-            'community' => Community::where("name", $community)->first(),
+            'community' => $community,
             'userCommunities' => $request->user()->communities()->get(),
-            'action' => $id ? 'post.update' : 'post.create',
-            'post' => $id ? Post::whereId($id)->first() : null,
+            'action' => $post ? 'post.update' : 'post.create',
+            'post' => $post ?? null,
         ]);
     }
 
-    public function create(PostCreateRequest $request, $community)
+    public function save(PostCreateRequest $request, Community $community, Post $post = new Post)
     {
-        $post = new Post;
-        return $this->saveAndViewPost($request, $community, $post);
-    }
-
-    public function update(PostCreateRequest $request, $community, $id)
-    {
-        $post = Post::whereId($id)->first();
-        return $this->saveAndViewPost($request, $community, $post);
-    }
-
-    public function delete(Request $request, $community, $id)
-    {
-        Post::whereId($id)->delete();
-        return Redirect::route('dashboard');
-    }
-
-    public function view(Request $request, $community, $id)
-    {
-        return view('post.view', [
-            'user' => $request->user(),
-            'community' => Community::where("name", $community)->first(),
-            'post' => Post::whereId($id)->first(),
-        ]);
-    }
-
-
-    private function saveAndViewPost($request, $community, $post)
-    {
-        $validated = $request->validated();
-
         $post->title = $request->title;
         if ($request->hasFile("image")) {
             $file = $request->image;
@@ -68,9 +38,26 @@ class PostController extends Controller
         $post->commentable = $request->boolean('commentable');
 
         $post->user_id = $request->user()->id;
-        $post->community_id = Community::where("name", $community)->first()->id;
+        $post->community_id = $community->id;
 
         $post->save();
-        return Redirect::route('post.view', ['community' => $community, 'id' => $post->id]);
+        return Redirect::route('post.view', ['community' => $community, 'post' => $post]);
+    }
+
+
+    public function delete(Request $request, $community, Post $post)
+    {
+        $request->user()->cannot('update', $post) ?? Response::deny('You do not own this post.');
+        $post->delete();
+        return Redirect::route('dashboard');
+    }
+
+    public function view(Request $request, Community $community, Post $post)
+    {
+        return view('post.view', [
+            'user' => $request->user(),
+            'community' => $community,
+            'post' => $post,
+        ]);
     }
 }
