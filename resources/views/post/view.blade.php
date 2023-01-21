@@ -2,14 +2,16 @@
     <x-slot name="header">
         <div class="py-12">
             <div class="max-w-7xl mx-auto lg:px-8">
-                <form method="post" class="pb-1"
-                    action="{{ route('post.edit', ['community' => $community->name, 'id' => $post->id]) }}">
-                    @csrf
-                    @method('put')
-                    <x-primary-button>
-                        {{ __('Edit') }}
-                    </x-primary-button>
-                </form>
+                @can('update', $post)
+                    <form method="post" class="pb-1"
+                        action="{{ route('post.update', ['community' => $community, 'post' => $post]) }}">
+                        @csrf
+                        @method('put')
+                        <x-primary-button>
+                            {{ __('Edit') }}
+                        </x-primary-button>
+                    </form>
+                @endcan
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div>
                         <p class="font-semibold text-md text-gray-600 leading-tight inline"> /r/{{ $community->name }}

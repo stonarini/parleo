@@ -5,8 +5,7 @@
 
 
     <form method="POST" enctype="multipart/form-data"
-        action="{{ route($action, ['community' => $community->name, 'id' => $post ? $post->id : null]) }}"
-        class="mt-6 space-y-6">
+        action="{{ route('post.save', ['community' => $community, 'post' => $post ?? null]) }}" class="mt-6 space-y-6">
         @csrf
         @method('post')
 

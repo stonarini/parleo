@@ -9,7 +9,7 @@
         Post</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('post.delete', ['community' => $community->name, 'id' => $post->id]) }}"
+        <form method="post" action="{{ route('post.delete', ['community' => $community->name, 'post' => $post]) }}"
             class="p-6">
             @csrf
             @method('delete')
