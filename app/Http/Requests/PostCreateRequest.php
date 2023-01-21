@@ -6,6 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PostCreateRequest extends FormRequest
 {
+
+    public function authorize()
+    {
+        return $this->post ? $this->user()->can('update', $this->post) : true;
+    }
     /**
      * Get the validation rules that apply to the request.
      *
