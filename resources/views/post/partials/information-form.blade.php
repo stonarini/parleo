@@ -10,7 +10,7 @@
         @method('post')
 
         <div>
-            <x-input-label for="title" :value="__('Title')" />
+            <x-input-label for="title" :value="__('post.title')" />
             <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title', $post ? $post->title : '')"
                 required />
             <x-input-error class="mt-2" :messages="$errors->get('title')" />
@@ -32,7 +32,7 @@
                     class="nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent text-gray-500 hover:bg-gray-200 focus:border-transparent bg-gray-100"
                     id="tabs-text-tab" data-bs-toggle="pill" data-bs-target="#tabs-text" role="tab"
                     aria-controls="cont-text" aria-selected="true">
-                    Text
+                    {{ __('post.text') }}
                 </a>
             </li>
             <li class="nav-item" role="presentation">
@@ -40,7 +40,7 @@
                     class="nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent text-gray-500 hover:bg-gray-200 focus:border-transparent"
                     id="tabs-image-tab" data-bs-toggle="pill" data-bs-target="#tabs-image" role="tab"
                     aria-controls="cont-image" aria-selected="false">
-                    Image
+                    {{ __('post.image') }}
                 </a>
             </li>
         </ul>
@@ -58,23 +58,24 @@
         </div>
 
         <div class="mb-3 xl:w-96">
-            <p class="block font-medium text-sm text-gray-700">Access</p>
+            <p class="block font-medium text-sm text-gray-700">{{ __('post.access') }}</p>
             <select
                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 name="access" required>
                 <option {{ $post && $post->access == 'private' ? 'selected' : ($post ? '' : 'selected') }}
-                    value="private">Private</option>
-                <option {{ $post && $post->access == 'public' ? 'selected' : '' }} value="public">Public</option>
+                    value="private">{{ __('post.private') }}</option>
+                <option {{ $post && $post->access == 'public' ? 'selected' : '' }} value="public">
+                    {{ __('post.public') }}</option>
             </select>
         </div>
 
         <div class="mb-3 xl:w-96 flex">
-            <x-input-label for="commentable" :value="__('Commentable')" />
+            <x-input-label for="commentable" :value="__('post.commentable')" />
             <x-text-input id="commentable" name="commentable" type="checkbox" class="mt-1 block m-2"
                 checked="{{ old('commentable', $post ? $post->commentable : true) }}" value="true" />
         </div>
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Post') }}</x-primary-button>
+            <x-primary-button>{{ __('post.post') }}</x-primary-button>
         </div>
     </form>
 </section>

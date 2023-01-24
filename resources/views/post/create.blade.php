@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight inline">
-            {{ __('POST') }}
+            POST
         </h2>
         @if (!$post)
-            <p class="inline text-sm text-gray-500">Create a post</p>
+            <p class="inline text-sm text-gray-500">{{ __('post.create') }}</p>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex float-right sm:items-center inline">
                 <x-dropdown align="right" width="100">
@@ -33,7 +33,7 @@
                 </x-dropdown>
             </div>
         @else
-            <p class="inline text-sm text-gray-500">Edit post</p>
+            <p class="inline text-sm text-gray-500">{{ __('post.edit') }}</p>
         @endif
     </x-slot>
 

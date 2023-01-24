@@ -7,6 +7,7 @@ use App\Models\Community;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use DateTime;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
@@ -14,6 +15,7 @@ class PostController extends Controller
 
     public function edit(Request $request, Community $community, Post $post = null)
     {
+        App::setLocale('es');
         return view('post.create', [
             'user' => $request->user(),
             'community' => $community,

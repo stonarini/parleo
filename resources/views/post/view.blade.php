@@ -8,7 +8,7 @@
                         @csrf
                         @method('put')
                         <x-primary-button>
-                            {{ __('Edit') }}
+                            {{ __('post.edit_button') }}
                         </x-primary-button>
                     </form>
                 @endcan
@@ -16,7 +16,7 @@
                     <div>
                         <p class="font-semibold text-md text-gray-600 leading-tight inline"> /r/{{ $community->name }}
                         </p>
-                        <p class="text-sm text-gray-400 leading-tight inline"> - Posted by
+                        <p class="text-sm text-gray-400 leading-tight inline"> - {{ __('post.posted') }}
                             /u/{{ $post->user()->first()->name }} {{ $post->date }}</p>
                         <h1 class="font-semibold text-gray-800 leading-tight mt-3" style="font-size: 1.75em">
                             {{ $post->title }}
