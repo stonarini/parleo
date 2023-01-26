@@ -25,8 +25,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function save(PostCreateRequest $request, Community $community, Post $post = new Post)
+    public function save(PostCreateRequest $request, Community $community, Post $post = null)
     {
+		$post = $post ?? new Post();
         $post->title = $request->title;
         if ($request->hasFile("image")) {
             $file = $request->image;
