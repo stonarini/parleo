@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,11 @@ Route::middleware('auth')->prefix('/r/{community:name}/post')->controller(PostCo
     Route::put('/{post}', 'create')->name('post.update');
     Route::delete('/{post}', 'destroy')->name('post.destroy');
 });
+
+Route::middleware("auth")->post('/tokens/create', function (Request $request) {
+    $request->user()->createToken("api");
+    return view("dashboard");
+});
+
 
 require __DIR__ . '/auth.php';
