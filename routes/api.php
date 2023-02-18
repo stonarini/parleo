@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostApiController;
+use App\Http\Controllers\CommunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('communities', CommunityController::class);
+Route::apiResource('posts', PostApiController::class);
+Route::apiResource('comments', CommentController::class);
