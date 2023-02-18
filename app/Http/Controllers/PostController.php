@@ -13,20 +13,19 @@ use Illuminate\Support\Facades\Redirect;
 class PostController extends Controller
 {
 
-    public function edit(Request $request, Community $community, Post $post = null)
+    public function create(Request $request, Community $community, Post $post = null)
     {
-        App::setLocale('es');
         return view('post.create', [
             'user' => $request->user(),
             'community' => $community,
-            'userCommunities' => $request->user()->communities()->get(),
-            'action' => $post ? 'post.update' : 'post.create',
             'post' => $post ?? null,
         ]);
     }
 
-    public function save(PostCreateRequest $request, Community $community, Post $post = new Post)
+    public function store(PostCreateRequest $request, Community $community, Post $post = null)
     {
+        $post = $post ?? new Post;
+
         $post->title = $request->title;
         if ($request->hasFile("image")) {
             $file = $request->image;
@@ -43,20 +42,20 @@ class PostController extends Controller
         $post->community_id = $community->id;
 
         $post->save();
-        return Redirect::route('post.view', ['community' => $community, 'post' => $post]);
+        return Redirect::route('post.show', ['community' => $community, 'post' => $post]);
     }
 
 
-    public function delete(Request $request, $community, Post $post)
+    public function destroy(Request $request, $community, Post $post)
     {
         $request->user()->cannot('update', $post) ?? Response::deny('You do not own this post.');
         $post->delete();
         return Redirect::route('dashboard');
     }
 
-    public function view(Request $request, Community $community, Post $post)
+    public function show(Request $request, Community $community, Post $post)
     {
-        return view('post.view', [
+        return view('post.show', [
             'user' => $request->user(),
             'community' => $community,
             'post' => $post,

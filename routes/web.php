@@ -35,11 +35,11 @@ Route::get('/img/{_}/{img}', function () {
 
 
 Route::middleware('auth')->prefix('/r/{community:name}/post')->controller(PostController::class)->group(function () {
-    Route::get('/new', 'edit')->name('post.edit');
-    Route::get('/{post}', 'view')->name('post.view');
-    Route::post('/{post?}', 'save')->name('post.save');
-    Route::put('/{post}', 'edit')->name('post.update');
-    Route::delete('/{post}', 'delete')->name('post.delete');
+    Route::get('/create', 'create')->name('post.create');
+    Route::get('/{post}', 'show')->name('post.show');
+    Route::post('/{post?}', 'store')->name('post.store');
+    Route::put('/{post}', 'create')->name('post.update');
+    Route::delete('/{post}', 'destroy')->name('post.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -24,8 +24,11 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        @foreach ($userCommunities as $com)
-                            <x-dropdown-link :href="route('post.edit', ['community' => $com->community()->first(), 'post' => null])">
+                        @foreach ($user->communities()->get() as $com)
+                            <x-dropdown-link :href="route('post.create', [
+                                'community' => $com->community()->first(),
+                                'post' => $post,
+                            ])">
                                 {{ $com->community()->first()->name }}
                             </x-dropdown-link>
                         @endforeach
