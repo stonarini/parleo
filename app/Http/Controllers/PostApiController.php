@@ -61,11 +61,11 @@ class PostApiController extends Controller
     public function update(Request $request, Post $post)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|max:255',
+            'title' => 'string|max:255',
+            'content' => 'string|max:255',
             'image' => 'string',
-            'access' => 'required|string',
-            'commentable' => 'required|boolean'
+            'access' => 'string',
+            'commentable' => 'boolean'
         ]);
 
         $validated->date = new Date;

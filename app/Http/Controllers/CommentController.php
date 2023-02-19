@@ -59,7 +59,7 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $validated = $request->validate([
-            'content' => 'required|string|max:255',
+            'content' => 'string|max:255',
             'image' => 'string'
         ]);
 

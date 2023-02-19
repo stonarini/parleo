@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CommunityResource;
 use App\Models\Community;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommunityController extends Controller
 {
@@ -28,7 +31,8 @@ class CommunityController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'banner' => 'required|string'
         ]);
 
         $community = Community::create($validated);
@@ -43,6 +47,9 @@ class CommunityController extends Controller
      */
     public function show(Community $community)
     {
+        if (!$community) {
+            throw new ModelNotFoundException();
+        }
         return new CommunityResource($community);
     }
 
@@ -56,8 +63,9 @@ class CommunityController extends Controller
     public function update(Request $request, Community $community)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string'
+            'name' => 'string|max:255',
+            'description' => 'string',
+            'banner' => 'string'
         ]);
 
         $community->update($validated);
