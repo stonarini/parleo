@@ -92,6 +92,17 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+        'pgsql_testing' => [
+            'driver' => 'pgsql',
+            'host' => env('TESTING_DB_HOST', 'randion.es'),
+            'database' => env('TESTING_DB_DATABASE', 'stonarini_test_parleo_db'),
+            'username' => env('TESTING_DB_USERNAME', 'stonarini_usr'),
+            'password' => env('TESTING_DB_PASSWORD', 'Secretos.2023'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
 
     ],
 
@@ -125,7 +136,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

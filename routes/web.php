@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,8 +45,9 @@ Route::middleware('auth')->prefix('/r/{community:name}/post')->controller(PostCo
 });
 
 Route::middleware("auth")->post('/tokens/create', function (Request $request) {
-    $request->user()->createToken("api");
-    return view("dashboard");
+    $request->user()->tokens()->delete();
+    $token = $request->user()->createToken("api")->plainTextToken;
+    return Redirect::route("dashboard")->with("token", $token);
 });
 
 

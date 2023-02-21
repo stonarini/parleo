@@ -2,19 +2,21 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Community;
 use App\Models\User;
 use Database\Seeders\CommunitySeeder;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
+use Tests\RefreshCommunities;
 
 class CommunitiesTest extends TestCase
 {
+
+    use RefreshCommunities;
+
     public function test_can_fetch_all_communities()
     {
-        $this->seed(CommunitySeeder::class);
         $community = Community::find(1);
         $user = User::factory()->create();
         $user->createToken("api");
@@ -86,11 +88,11 @@ class CommunitiesTest extends TestCase
 
     public function test_can_update_community()
     {
-        $community = Community::find(11);
+        $community = Community::find(1);
         $user = User::factory()->create();
         $user->createToken("api");
 
-        $response = $this->actingAs($user)->patchJson("/api/communities/11", ["name" => "Changed"]);
+        $response = $this->actingAs($user)->patchJson("/api/communities/1", ["name" => "Changed"]);
         $response->assertOk();
         $response->assertJson(
             function (AssertableJson $json) use ($community) {
